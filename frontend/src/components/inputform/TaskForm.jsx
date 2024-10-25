@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "./taskform.css"
+
 import axios from 'axios'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { RiContractLeftFill } from 'react-icons/ri'
@@ -24,7 +24,7 @@ export const TaskForm = () => {
             if (data?.title?.trim() == "") {
                 alert("Title is required");
             } else {
-                console.log(data)
+                // console.log(data)
                 const response = await axios.put(`http://localhost:8085/tasks/${id}`, data);
                 // console.log(response);
                 navigate("/")
@@ -52,7 +52,7 @@ export const TaskForm = () => {
 
     const getData = async () => {
         const data = await axios.get(`http://localhost:8085/tasks/${id}`);
-        console.log(data.data)
+        // console.log(data.data)
         setData({
             title: data.data.title,
             description: data.data.description,
@@ -61,7 +61,7 @@ export const TaskForm = () => {
     }
     useEffect(() => {
         if (id) {
-            console.log("isupdating")
+            // console.log("isupdating")
             // console.log(id.id.split(":")[1])
             setIsUpdating(true)
             getData()
@@ -72,29 +72,29 @@ export const TaskForm = () => {
 
 
     return (
-        <div className='main'>
-            <div className='form-div'>
+        <div className=' mt-16 py-16 bg-slate-300 w-[60%] mx-auto rounded-2xl'>
+            <div className='my-2 mx-auto w-[60%] text-lg flex flex-col'>
                 <NavLink to={"/"}>
                     <RiContractLeftFill size={28} />
                 </NavLink>
             </div>
-            <div className='form-div'>
+            <div className='my-2 mx-auto w-[60%] text-lg flex flex-col'>
                 <label htmlFor="title">Title</label>
-                <input type="text" required value={data?.title} name='title' onChange={(e) => handleChange(e.target)} placeholder='title' />
+                <input className='p-4 text-lg rounded-lg' type="text" required value={data?.title} name='title' onChange={(e) => handleChange(e.target)} placeholder='title' />
             </div>
-            <div className='form-div'>
+            <div className='my-2 mx-auto w-[60%] text-lg flex flex-col'>
                 <label htmlFor="desc">Description</label>
-                <input type="text" name='description' value={data?.description} onChange={(e) => handleChange(e.target)} placeholder='description' />
+                <input className='p-4 text-lg rounded-lg' type="text" name='description' value={data?.description} onChange={(e) => handleChange(e.target)} placeholder='description' />
             </div>
 
-            {updating && <div className='form-div'>
+            {updating && <div className='my-2 mx-auto w-[60%] text-lg flex flex-col'>
                 <label htmlFor="status">Status</label>
                 {data.status ? "completed" : "not-completed"}
             </div>}
 
-            <div className="form-div">
+            <div className="my-2 mx-auto mt-8 w-[60%] text-lg flex flex-col items-center">
 
-                <button onClick={handleSubmit}>Add Task</button>
+                <button className='w-fit p-2  bg-slate-500 rounded-lg' onClick={handleSubmit}>Add Task</button>
             </div>
 
         </div>

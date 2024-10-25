@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { MdDeleteOutline } from 'react-icons/md'
-import "./tasktable.css"
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 
@@ -21,10 +20,10 @@ export const TaskTable = () => {
         // console.log(response)
     }
 
-    const handleChangeStatus = async (id, status) =>{
-        const data = {status : !status};
+    const handleChangeStatus = async (id, status) => {
+        const data = { status: !status };
         // console.log(data);
-        const response = await axios.patch(`http://localhost:8085/tasks/${id}/status` , data);
+        const response = await axios.patch(`http://localhost:8085/tasks/${id}/status`, data);
         getAllTasks();
     }
 
@@ -35,20 +34,21 @@ export const TaskTable = () => {
 
 
     return (
-        <div className='tasktable'>
-            <div className='button_div'>
+        <div className='mx-auto my-4'>
+            <div className='w-[80%] my-[25px] mx-auto flex justify-end'>
                 <NavLink to={"/add"}>
 
-                    <button className='button'>Add New Task</button>
+                    <button className='p-2 text-xl bg-blue-400 cursor-pointer rounded-md text-white'>Add New Task</button>
                 </NavLink>
             </div>
-            <table>
+            <table className='w-[80%] bg-slate-100 border border-blue-50 text-2xl mx-auto'>
                 <thead>
                     <tr>
                         <th>S.N</th>
                         <th>Title</th>
                         <th>Description</th>
-                        <th>status</th>
+                        <th colSpan={2}>status</th>
+
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -60,14 +60,14 @@ export const TaskTable = () => {
                                 <td>{index + 1}</td>
                                 <td>{task.title}</td>
                                 <td>{task?.description}</td>
-                                <td>{task?.status ? "Completed " : "Not Completed"} <button onClick={(e) => handleChangeStatus(task._id , task.status)} className='toggle'>Toggle</button></td>
-
-                                <td className='iconmenu'>
+                                <td className={`${task.status ? "text-green-600" : "text-red-600"}`}>{task?.status ? "Completed " : "Not Completed"} </td>
+                                <td><button onClick={(e) => handleChangeStatus(task._id, task.status)} className={`py-1 px-2 bg-emerald-400 rounded-xl`}>Toggle</button></td>
+                                <td className=' cursor-pointer '>
                                     <NavLink to={`/update/:${task._id}`} >
-                                    <FaEdit className='ricon' size={24} />
+                                        <FaEdit className='m-auto' color='green' size={24} />
                                     </NavLink>
-                                    </td>
-                                <td onClick={() => { handleDelete(task._id) }} className='iconmenu' ><MdDeleteOutline className='ricon' size={24} /></td>
+                                </td>
+                                <td onClick={() => { handleDelete(task._id) }} className='cursor-pointer' ><MdDeleteOutline className='m-auto' color='red' size={28} /></td>
 
                             </tr>
                         })

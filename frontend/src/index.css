@@ -1,5 +1,17 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 *{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+table,td,tr,th{
+  @apply border border-black text-center
+}
+
+td,th{
+  @apply p-2
 }
