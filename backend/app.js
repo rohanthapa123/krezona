@@ -64,12 +64,36 @@ router.post("/tasks", async(req, res) => {
     }
 })
 
+router.put("/tasks/:id", async(req, res) => {
+    const data = req.body;
+    const id = req.params.id;
+    
+    console.log(data);
+    try {
+        await Task.findByIdAndUpdate(id, data).then(() => console.log("Saved to db"))
+        res.status(200).json({message : "Data saved"})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message : "Failed to save task"});
+    }
+})
+
 router.get("/tasks", async (req, res) => {
     try {
-        
         const tasks = await Task.find();
         res.status(200).json(tasks);
     } catch (error) {
+        res.status(500).json({ message: "Error retrieving tasks", error });
+    }
+});
+
+router.get("/tasks/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const tasks = await Task.findById(id);
+        res.status(200).json(tasks);
+    } catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Error retrieving tasks", error });
     }
 });
@@ -96,7 +120,6 @@ router.delete("/tasks/:id", async (req, res) =>{
         if(deletedUser){
             res.status(200).json({message : "Deleted Success"});
         }
-
         
     } catch (error) {
         console.log(error);

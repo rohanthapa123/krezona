@@ -11,19 +11,19 @@ export const TaskTable = () => {
 
     const getAllTasks = async () => {
         const data = await axios.get("http://localhost:8085/tasks");
-        console.log(data)
+        // console.log(data)
         setTasks(data.data)
     }
 
     const handleDelete = async (id) => {
         const response = await axios.delete(`http://localhost:8085/tasks/${id}`);
         getAllTasks();
-        console.log(response)
+        // console.log(response)
     }
 
     const handleChangeStatus = async (id, status) =>{
         const data = {status : !status};
-        console.log(data);
+        // console.log(data);
         const response = await axios.patch(`http://localhost:8085/tasks/${id}/status` , data);
         getAllTasks();
     }
@@ -39,7 +39,7 @@ export const TaskTable = () => {
             <div className='button_div'>
                 <NavLink to={"/add"}>
 
-                    <button className='button'>Add Now Task</button>
+                    <button className='button'>Add New Task</button>
                 </NavLink>
             </div>
             <table>
@@ -62,7 +62,11 @@ export const TaskTable = () => {
                                 <td>{task?.description}</td>
                                 <td>{task?.status ? "Completed " : "Not Completed"} <button onClick={(e) => handleChangeStatus(task._id , task.status)} className='toggle'>Toggle</button></td>
 
-                                <td className='iconmenu'><FaEdit className='ricon' size={24} /></td>
+                                <td className='iconmenu'>
+                                    <NavLink to={`/update/:${task._id}`} >
+                                    <FaEdit className='ricon' size={24} />
+                                    </NavLink>
+                                    </td>
                                 <td onClick={() => { handleDelete(task._id) }} className='iconmenu' ><MdDeleteOutline className='ricon' size={24} /></td>
 
                             </tr>

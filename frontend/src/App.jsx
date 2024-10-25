@@ -10,6 +10,7 @@ function App() {
     <Routes>
       <Route path='/' element={<List />} />
       <Route path='/add' element={<NewNote />} />
+      <Route path='/update/:id' element={<NewNote />} />
     </Routes>
   )
 }

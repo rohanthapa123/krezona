@@ -5,7 +5,7 @@ export const Navbar = () => {
     <div className=''>
       <nav className="navbar">
         <div className="icon">
-          <a class="" href="#"><h1>Task Management System</h1></a>
+          <a className="" href="#"><h1>Task Management System</h1></a>
         </div>
       </nav>
     </div>
