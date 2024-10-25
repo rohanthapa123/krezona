@@ -1,0 +1,42 @@
+table{
+    width: 90%;
+    background-color: ghostwhite;
+    border: 2px solid black;
+    border-collapse: collapse;
+    font-size: 24px;
+}
+
+tr,td,th{
+    border: 1px solid black;
+    text-align: center;
+}
+
+.tasktable{
+    margin: 20px auto;
+    width: 90%;
+}
+
+.iconmenu{
+    cursor: pointer;
+}
+
+.button_div{
+    width: 80%;
+    margin: 25px auto ;
+    display: flex;
+    justify-content: end;
+}
+
+.button{
+    padding: 5px;
+    font-size: 20px;
+    background-color: blue;
+    cursor: pointer;
+    border-radius: 5px;
+    color: white;
+
+}
+
+.toggle{
+    padding: 4px;
+}
