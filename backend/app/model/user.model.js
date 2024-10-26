@@ -4,7 +4,8 @@ const { default: mongoose } = require("mongoose");
 const UserSchemaDef = mongoose.Schema({
     username: {
         type: String,
-        require: true
+        require: true,
+        unique: true
     },
     email: {
         type: String,
@@ -19,6 +20,10 @@ const UserSchemaDef = mongoose.Schema({
         type: String,
         enum: ["admin" , "user"],
         default: "user"
+    },
+    verified: {
+        type: Boolean,
+        default: false
     }
 })
 

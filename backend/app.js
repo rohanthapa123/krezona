@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-
+const cookieparser = require("cookie-parser")
 dotenv.config();
 
 require("./config/dbconfig")
@@ -13,13 +13,17 @@ const router = require("./routes")
 app.use(
     cors({
         origin: "http://localhost:5173",
+        credentials: true 
     })
 );
 
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(cookieparser())
 
 app.use(router);
+
+
 
 app.use((error, req, res, next) =>{
     let status = error.status ?? 500;

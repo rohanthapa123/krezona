@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import axios from 'axios'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
@@ -12,17 +12,21 @@ export const TaskForm = () => {
         title: "",
         description: "",
         status: false,
+        user: ""
     })
     const [updating, setIsUpdating] = useState(false);
+    const [users, setUsers] = useState([]);
     const navigate = useNavigate();
 
 
 
     const handleSubmit = async () => {
-        // console.log(data)
+        console.log(data)
         if (updating) {
             if (data?.title?.trim() == "") {
                 alert("Title is required");
+            } else if (data?.user?.trim() == "") {
+                alert("Please select the user");
             } else {
                 // console.log(data)
                 const response = await axios.put(`http://localhost:8085/tasks/${id}`, data);
@@ -34,7 +38,9 @@ export const TaskForm = () => {
             if (data?.title?.trim() == "") {
                 alert("Title is required");
             } else {
-                const response = await axios.post("http://localhost:8085/tasks", data);
+                const response = await axios.post("http://localhost:8085/tasks", data , {
+                    withCredentials: true
+                });
                 // console.log(response);
                 navigate("/")
             }
@@ -43,12 +49,18 @@ export const TaskForm = () => {
 
     const handleChange = async (e) => {
         const { name, value } = e;
-
+        console.log(name, value)
         setData((prev) => ({
             ...prev,
             [name]: value
         }))
     }
+
+    const getUsers = useCallback(async () => {
+        const response = await axios.get(`http://localhost:8085/user`);
+        console.log(response.data)
+        setUsers(response.data.result);
+    }, [])
 
     const getData = async () => {
         const data = await axios.get(`http://localhost:8085/tasks/${id}`);
@@ -61,13 +73,12 @@ export const TaskForm = () => {
     }
     useEffect(() => {
         if (id) {
-            // console.log("isupdating")
-            // console.log(id.id.split(":")[1])
             setIsUpdating(true)
             getData()
         }
+        getUsers();
 
-    }, [])
+    }, [getUsers])
 
 
 
@@ -86,6 +97,19 @@ export const TaskForm = () => {
                 <label htmlFor="desc">Description</label>
                 <input className='p-4 text-lg rounded-lg' type="text" name='description' value={data?.description} onChange={(e) => handleChange(e.target)} placeholder='description' />
             </div>
+            <div className='my-2 mx-auto w-[60%] text-lg flex flex-col'>
+                <label htmlFor="user">User</label>
+                <select className='p-4 text-lg rounded-lg' name="user" id="" value={data?.user} onChange={(e) => handleChange(e.target)}  >
+                    <option value="">Select User </option>
+                    {
+                        users?.map((user) => {
+                            return <option key={user?._id} value={user?._id}>{user?.username}</option>
+                        })
+                    }
+                </select>
+
+            </div>
+
 
             {updating && <div className='my-2 mx-auto w-[60%] text-lg flex flex-col'>
                 <label htmlFor="status">Status</label>
