@@ -5,6 +5,7 @@ const SignUp = () => {
 
     const [registerData, setRegisterData] = useState({
         username : "",
+        email : "",
         password : ""
     })
     const navigate = useNavigate();
@@ -27,7 +28,8 @@ const SignUp = () => {
             if (response.status === 403) {
                 alert(response.data.message); // Ensure that `response.data.message` exists
             } else {
-                navigate("/");
+                alert("Account created Succesfully")
+                navigate("/login");
             }
         } catch (error) {
             // Handle network errors, or backend sending a status other than 2xx
@@ -63,7 +65,7 @@ const SignUp = () => {
                         <form noValidate onSubmit={handleSubmit} className="mb-4">
                             <div className="grid gap-2">
                                 <div className="grid gap-1">
-                                    <label className="text-zinc-950 dark:text-black" htmlFor="uesrname">
+                                    <label className="text-zinc-950 dark:text-black" htmlFor="username">
                                         Username
                                     </label>
                                     <input
@@ -72,6 +74,17 @@ const SignUp = () => {
                                         placeholder="Your Username"
                                         type="text"
                                         name="username"
+                                        onChange={(e) => handleChange(e)}
+                                    />
+                                    <label className="text-zinc-950 dark:text-black" htmlFor="email">
+                                        Email
+                                    </label>
+                                    <input
+                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                                        id="email"
+                                        placeholder="Your Email"
+                                        type="email"
+                                        name="email"
                                         onChange={(e) => handleChange(e)}
                                     />
                                     <label
@@ -94,7 +107,7 @@ const SignUp = () => {
                                     className="bg-green-400  py-2 px-4 mt-4 w-fit m-auto rounded-xl"
                                     type="submit"
                                 >
-                                    Sign in
+                                    Sign Up
                                 </button>
                             </div>
                         </form>

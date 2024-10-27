@@ -1,7 +1,10 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 const Login = () => {
+
+    const { isLoggedIn, role , setIsLoggedIn , setRole } = useAuth();
 
     const [loginData, setLoginData] = useState({
         username: "",
@@ -22,12 +25,17 @@ const Login = () => {
             const response = await axios.post("http://localhost:8085/auth/login", loginData, {
                 withCredentials: true,
             });
-            // console.log(response);  // Log entire response to check the structure
+            console.log(response);  // Log entire response to check the structure
 
             if (response.status === 403) {
                 alert(response.data.message); // Ensure that `response.data.message` exists
             } else {
-                navigate("/");
+                localStorage.setItem("data", JSON.stringify(response.data));
+                setIsLoggedIn(true);
+                setRole(response.data.result.role);
+                console.log(`Redirecting to /${response.data.result.role}`)
+                navigate(`/${response.data.result.role}`);
+
             }
         } catch (error) {
             // Handle network errors, or backend sending a status other than 2xx
@@ -47,6 +55,12 @@ const Login = () => {
         console.log(loginData);
         login();
     }
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate(`/${role}`)
+        }
+    }, [isLoggedIn, role, navigate])
 
     return (
         <div className="flex  justify-center items-center bg-slate-400 h-[100vh]">

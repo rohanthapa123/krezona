@@ -42,7 +42,7 @@ export const TaskForm = () => {
                     withCredentials: true
                 });
                 // console.log(response);
-                navigate("/")
+                navigate("/admin")
             }
         }
     }
@@ -57,13 +57,17 @@ export const TaskForm = () => {
     }
 
     const getUsers = useCallback(async () => {
-        const response = await axios.get(`http://localhost:8085/user`);
+        const response = await axios.get(`http://localhost:8085/user`,{
+            withCredentials: true
+        });
         console.log(response.data)
         setUsers(response.data.result);
     }, [])
 
     const getData = async () => {
-        const data = await axios.get(`http://localhost:8085/tasks/${id}`);
+        const data = await axios.get(`http://localhost:8085/tasks/${id}`,{
+            withCredentials: true
+        });
         // console.log(data.data)
         setData({
             title: data.data.title,
@@ -85,7 +89,7 @@ export const TaskForm = () => {
     return (
         <div className=' mt-16 py-16 bg-slate-300 w-[60%] mx-auto rounded-2xl'>
             <div className='my-2 mx-auto w-[60%] text-lg flex flex-col'>
-                <NavLink to={"/"}>
+                <NavLink to={"/admin"}>
                     <RiContractLeftFill size={28} />
                 </NavLink>
             </div>
