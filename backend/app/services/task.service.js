@@ -1,5 +1,6 @@
 
-const Task = require("../model/task.model")
+const Task = require("../model/task.model");
+const sendEmailNotification = require("./email.service");
 
 class TaskService{
     addTask = async (data) =>{
@@ -72,7 +73,11 @@ class TaskService{
             
             const acceptedTask = await Task.findByIdAndUpdate(id, {
                 accepted: true
-            });
+            }).populate("user", "username email").populate("assignedBy", "username email");
+            console.log(acceptedTask)
+            const message = `Task ${acceptedTask.title} of task ID ${acceptedTask._id} has been completed by ${acceptedTask.user.username} at ${new Date()}`;
+            console.log(message)
+            await sendEmailNotification(acceptedTask.assignedBy.email , "Task Accepted" , message)
             return acceptedTask;
             
         } catch (error) {
@@ -95,7 +100,7 @@ class TaskService{
     getAssignedTask = async (id) =>{
         try {
             console.log(id);
-            const assignedTask = await Task.find({assignedBy: id});
+            const assignedTask = await Task.find({assignedBy: id}).populate("user" , "username");
             return assignedTask;
             
         } catch (error) {

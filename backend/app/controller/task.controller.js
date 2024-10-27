@@ -1,5 +1,7 @@
 const TaskService = require("../services/task.service")
-const Task = require("../model/task.model")
+const Task = require("../model/task.model");
+const sendEmailNotification = require("../services/email.service");
+
 
 
 class TaskController{
