@@ -6,6 +6,6 @@ const auth = require("../app/middleware/auth.middleware")
 const rbac = require("../app/middleware/role.middleware")
 
 router.get("/",auth, rbac.isAdmin, user_ctrl.getAllUsers);
-router.patch(":id/verify", auth, rbac.isAdmin, user_ctrl.verifyUser);
+router.patch("/:id/verify", auth, rbac.isAdmin, user_ctrl.verifyUser);
 
 module.exports = router;

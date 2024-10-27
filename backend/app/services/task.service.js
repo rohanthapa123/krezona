@@ -25,7 +25,7 @@ class TaskService{
 
     getTask = async () => {
         try {
-            const tasks = await Task.find();
+            const tasks = await Task.find().populate("user", "username");
             // console.log(tasks)
             return tasks;
         } catch (error) {

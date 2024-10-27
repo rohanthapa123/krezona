@@ -19,6 +19,7 @@ class UserController{
     verifyUser = async (req, res, next) =>{
         try {
             const id = req.params.id;
+            console.log(id)
             const result = await this.user_service.verifyUser(id);
             res.status(200).json({result: result})
         } catch (error) {

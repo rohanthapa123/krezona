@@ -44,7 +44,9 @@ class UserService{
     }
     getUser = async () =>{
         try {
-            let result = await UserModel.find();
+            let result = await UserModel.find({
+                role: "user"
+            });
             return result;
         } catch (error) {
             console.log(error);

@@ -57,6 +57,7 @@ class AuthController {
 
             res.status(200).json({
               result: loggedInUser,
+              token: token,
               status: true,
               message: "Logged in successfully",
             });
@@ -72,6 +73,16 @@ class AuthController {
       next({ status: 400, message: error });
     }
   };
+
+  logout = (req, res, next) =>{
+    try {
+        res.clearCookie("token");
+        res.status(200).send({ message: "Logged out successfully" });
+    } catch (error) {
+        console.log(error);
+        next({ status: 400, message: error });
+    }
+  }
 }
 
 module.exports = AuthController;

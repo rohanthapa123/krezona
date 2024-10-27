@@ -11,6 +11,10 @@ router.route("/:id").put(auth,rbac.isAdmin, task_ctrl.updateTask)
 
 router.route("/").get(auth, task_ctrl.getTask);
 
+router.route("/mytask").get(auth, task_ctrl.getMyTask);
+
+router.route("/assignedTask").get(auth, rbac.isAdmin , task_ctrl.getAssignedTask)
+
 router.route("/:id").get(auth,task_ctrl.getTaskById);
 
 router.route("/:id/status").patch(auth,rbac.isUser, task_ctrl.changeTaskStatus)
