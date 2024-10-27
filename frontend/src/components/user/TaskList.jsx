@@ -1,15 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { FaEdit } from 'react-icons/fa'
-import { MdDeleteOutline } from 'react-icons/md'
 import axios from 'axios'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 
 export const TaskList = () => {
 
     const [tasks, setTasks] = useState();
 
     const getAllTasks = async () => {
-        const response = await axios.get("http://localhost:8085/tasks/mytask", {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/tasks/mytask`, {
             withCredentials: true
         });
         // console.log(response)
@@ -20,14 +17,14 @@ export const TaskList = () => {
     const handleChangeStatus = async (id, status) => {
         const data = { status: !status };
         // console.log(data);
-        const response = await axios.patch(`http://localhost:8085/tasks/${id}/status`, data, {
+        const response = await axios.patch(`${import.meta.env.VITE_BASE_URL}/tasks/${id}/status`, data, {
             withCredentials: true
         });
         getAllTasks();
     }
 
     const handleAccept = async (id) => {
-        await axios.patch(`http://localhost:8085/tasks/${id}/accept`, {}, {
+        await axios.patch(`${import.meta.env.VITE_BASE_URL}/tasks/${id}/accept`, {}, {
             withCredentials: true
         })
         getAllTasks();
@@ -39,9 +36,9 @@ export const TaskList = () => {
 
 
     return (
-        <div className='mx-auto my-4'>
+        <div className='mx-auto py-4 overflow-scroll my-4'>
 
-            <table className='w-[80%] bg-slate-100 border border-blue-50 text-2xl mx-auto'>
+            <table className='w-[80%]  bg-slate-100 border border-blue-50 text-2xl mx-auto'>
                 <thead>
                     <tr>
                         <th>S.N</th>

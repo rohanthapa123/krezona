@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
 import axios from 'axios'
-import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { RiContractLeftFill } from 'react-icons/ri'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 export const TaskForm = () => {
 
     const ids = useParams();
@@ -29,16 +29,20 @@ export const TaskForm = () => {
                 alert("Please select the user");
             } else {
                 // console.log(data)
-                const response = await axios.put(`http://localhost:8085/tasks/${id}`, data);
+                const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/tasks/${id}`, data,
+                    {
+                        withCredentials: true
+                    }
+                );
                 // console.log(response);
-                navigate("/")
+                navigate("/admin")
             }
         } else {
 
             if (data?.title?.trim() == "") {
                 alert("Title is required");
             } else {
-                const response = await axios.post("http://localhost:8085/tasks", data , {
+                const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/tasks`, data, {
                     withCredentials: true
                 });
                 // console.log(response);
@@ -57,7 +61,7 @@ export const TaskForm = () => {
     }
 
     const getUsers = useCallback(async () => {
-        const response = await axios.get(`http://localhost:8085/user`,{
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/user`, {
             withCredentials: true
         });
         // console.log(response.data)
@@ -65,14 +69,15 @@ export const TaskForm = () => {
     }, [])
 
     const getData = async () => {
-        const data = await axios.get(`http://localhost:8085/tasks/${id}`,{
+        const data = await axios.get(`${import.meta.env.VITE_BASE_URL}/tasks/${id}`, {
             withCredentials: true
         });
-        // console.log(data.data)
+        console.log(data.data)
         setData({
             title: data.data.title,
             description: data.data.description,
-            status: data.data.status
+            status: data.data.status,
+            user: data.data.user
         })
     }
     useEffect(() => {

@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { MdDeleteOutline } from 'react-icons/md'
-import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 
 export const AssignedTaskList = () => {
@@ -9,15 +9,15 @@ export const AssignedTaskList = () => {
     const [tasks, setTasks] = useState();
 
     const getAllTasks = async () => {
-        const data = await axios.get("http://localhost:8085/tasks/assignedtask", {
+        const data = await axios.get(`${import.meta.env.VITE_BASE_URL}/tasks/assignedtask`, {
             withCredentials: true
         });
-        console.log(data)
+        // console.log(data)
         setTasks(data.data.result)
     }
 
     const handleDelete = async (id) => {
-        const response = await axios.delete(`http://localhost:8085/tasks/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_BASE_URL}/tasks/${id}`, {
             withCredentials: true
         });
         getAllTasks();
@@ -31,8 +31,8 @@ export const AssignedTaskList = () => {
 
 
     return (
-        <div className='mx-auto my-4'>
-            <div className='w-[80%] my-[25px] mx-auto flex justify-end'>
+        <div className='mx-auto py-4 overflow-scroll my-4 '>
+            <div className='w-[80%]  my-[25px] mx-auto flex justify-end'>
                 <NavLink to={"add"}>
 
                     <button className='p-2 text-xl bg-blue-400 cursor-pointer rounded-md text-white'>Add New Task</button>

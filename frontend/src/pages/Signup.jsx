@@ -4,39 +4,39 @@ import { NavLink, useNavigate } from "react-router-dom";
 const SignUp = () => {
 
     const [registerData, setRegisterData] = useState({
-        username : "",
-        email : "",
-        password : ""
+        username: "",
+        email: "",
+        password: ""
     })
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setRegisterData((prev) => ({
             ...prev,
-            [name] : value
+            [name]: value
         }))
     }
 
-    const register = async () =>{
+    const register = async () => {
         try {
-            const response = await axios.post("http://localhost:8085/auth/register", registerData, {
+            
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, registerData, {
                 withCredentials: true,
             });
-            // console.log(response);  // Log entire response to check the structure
-            
+            // console.log(response);  /
+
             if (response.status === 403) {
-                alert(response.data.message); // Ensure that `response.data.message` exists
+                alert(response.data.message); 
             } else {
                 alert("Account created Succesfully")
                 navigate("/login");
             }
         } catch (error) {
-            // Handle network errors, or backend sending a status other than 2xx
             if (error.response) {
-                // console.log(error.response);  // Log the full error response
+                // console.log(error.response);  
                 if (error.response.status === 403) {
-                    alert(error.response.data.message); // Handle the 403 status correctly
+                    alert(error.response.data.message); 
                 }
             } else {
                 console.error("Error:", error.message);
@@ -44,9 +44,20 @@ const SignUp = () => {
         }
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(registerData);
+        const { username, email, password } = registerData;
+        if (!username || !email || !password) {
+            alert("All fields are required.");
+            return;
+        }
+
+        if (password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
+
         register();
     }
 
@@ -69,7 +80,7 @@ const SignUp = () => {
                                         Username
                                     </label>
                                     <input
-                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-md font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 "
                                         id="username"
                                         placeholder="Your Username"
                                         type="text"
@@ -80,7 +91,7 @@ const SignUp = () => {
                                         Email
                                     </label>
                                     <input
-                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-md font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 "
                                         id="email"
                                         placeholder="Your Email"
                                         type="email"
@@ -97,8 +108,9 @@ const SignUp = () => {
                                         id="password"
                                         placeholder="Password"
                                         type="password"
-                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-md font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 "
                                         name="password"
+                                        minLength={8}
                                         onChange={(e) => handleChange(e)}
 
                                     />
@@ -111,7 +123,7 @@ const SignUp = () => {
                                 </button>
                             </div>
                         </form>
-                        
+
                         <p>
                             <NavLink to={"/login"}>Already have an account? Login</NavLink>
                         </p>

@@ -2,9 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-const Login = () => {
 
-    const { isLoggedIn, role , setIsLoggedIn , setRole } = useAuth();
+
+const Login = () => {
+    
+
+
+    const { isLoggedIn, role, setIsLoggedIn, setRole } = useAuth();
 
     const [loginData, setLoginData] = useState({
         username: "",
@@ -22,13 +26,21 @@ const Login = () => {
 
     const login = async () => {
         try {
-            const response = await axios.post("http://localhost:8085/auth/login", loginData, {
+            if (loginData.username.trim() == "") {
+                alert("Provide Usename");
+                return;
+            }
+            if (loginData.password == "") {
+                alert("Provide Password");
+                return;
+            }
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, loginData, {
                 withCredentials: true,
             });
             //console.log(response);  
 
             if (response.status === 403) {
-                alert(response.data.message); 
+                alert(response.data.message);
             } else {
                 localStorage.setItem("data", JSON.stringify(response.data));
                 setIsLoggedIn(true);
@@ -38,9 +50,9 @@ const Login = () => {
 
             }
         } catch (error) {
-            
+
             if (error.response) {
-                
+
                 if (error.response.status === 403) {
                     alert(error.response.data.message); // Handle the 403 status correctly
                 }
@@ -81,7 +93,7 @@ const Login = () => {
                                         Username
                                     </label>
                                     <input
-                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-md font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 "
                                         id="username"
                                         placeholder="Your Username"
                                         type="text"
@@ -98,7 +110,7 @@ const Login = () => {
                                         id="password"
                                         placeholder="Password"
                                         type="password"
-                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                                        className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-md font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 "
                                         name="password"
                                         onChange={(e) => handleChange(e)}
 

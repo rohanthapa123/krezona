@@ -1,18 +1,18 @@
 
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import { NewNote } from './pages/admin/NewNote'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
 import ProtectedRoute from './components/ProtectedRoute'
-import AdminLayout from './layout/AdminLayout'
 import AdminRoute from './components/admin/AdminRoute'
-import User from './pages/admin/User'
-import { List } from './pages/user/List'
-import UserLayout from './layout/UserLayout'
+import { AssignedTaskList } from './components/admin/AssignedTaskList'
 import UserRoute from './components/user/UserRoute'
 import { useAuth } from './context/AuthContext'
-import { AssignedTaskList } from './components/admin/AssignedTaskList'
+import AdminLayout from './layout/AdminLayout'
+import UserLayout from './layout/UserLayout'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import { NewNote } from './pages/admin/NewNote'
+import User from './pages/admin/User'
+import { List } from './pages/user/List'
 
 function App() {
   const { isLoggedIn, role, loading } = useAuth();
