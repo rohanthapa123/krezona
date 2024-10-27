@@ -108,12 +108,23 @@ class TaskController{
 
     getMyTask = async (req, res) =>{
         try {
-            const id = req.user.role;
+            const id = req.user.user_id;
             const tasks = await this.task_service.getMyTask(id);
-            res.status(200).json({message : "Task Accepted"});
+            res.status(200).json({result : tasks, message : "Task Fetched Successfully"});
         } catch (error) {
             console.log(error);
-            res.status(500).json({ message: "Error Accepting tasks", error });
+            res.status(500).json({ message: "Error Fetching tasks", error });
+        }
+    }
+
+    getAssignedTask = async (req, res) =>{
+        try {
+            const id = req.user.user_id;
+            const tasks = await this.task_service.getAssignedTask(id);
+            res.status(200).json({result : tasks, message : "Task Fetched Successfully"});
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: "Error Fetching tasks", error });
         }
     }
 }

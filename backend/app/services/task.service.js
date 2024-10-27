@@ -84,8 +84,19 @@ class TaskService{
     getMyTask = async (id) =>{
         try {
             
-            const acceptedTask = await Task.find({user: id});
-            return acceptedTask;
+            const myTask = await Task.find({user: id});
+            return myTask;
+            
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+    getAssignedTask = async (id) =>{
+        try {
+            console.log(id);
+            const assignedTask = await Task.find({assignedBy: id});
+            return assignedTask;
             
         } catch (error) {
             console.log(error);
