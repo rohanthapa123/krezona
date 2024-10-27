@@ -25,22 +25,22 @@ const Login = () => {
             const response = await axios.post("http://localhost:8085/auth/login", loginData, {
                 withCredentials: true,
             });
-            console.log(response);  // Log entire response to check the structure
+            //console.log(response);  
 
             if (response.status === 403) {
-                alert(response.data.message); // Ensure that `response.data.message` exists
+                alert(response.data.message); 
             } else {
                 localStorage.setItem("data", JSON.stringify(response.data));
                 setIsLoggedIn(true);
                 setRole(response.data.result.role);
-                console.log(`Redirecting to /${response.data.result.role}`)
+                // console.log(`Redirecting to /${response.data.result.role}`)
                 navigate(`/${response.data.result.role}`);
 
             }
         } catch (error) {
-            // Handle network errors, or backend sending a status other than 2xx
+            
             if (error.response) {
-                // console.log(error.response);  // Log the full error response
+                
                 if (error.response.status === 403) {
                     alert(error.response.data.message); // Handle the 403 status correctly
                 }
@@ -52,7 +52,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(loginData);
+        // console.log(loginData);
         login();
     }
 

@@ -9,11 +9,11 @@ export const TaskList = () => {
     const [tasks, setTasks] = useState();
 
     const getAllTasks = async () => {
-        const data = await axios.get("http://localhost:8085/tasks", {
+        const response = await axios.get("http://localhost:8085/tasks/mytask", {
             withCredentials: true
         });
-        // console.log(data)
-        setTasks(data.data)
+        // console.log(response)
+        setTasks(response.data.result)
     }
 
 

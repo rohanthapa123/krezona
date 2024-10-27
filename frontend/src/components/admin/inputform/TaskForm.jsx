@@ -49,7 +49,7 @@ export const TaskForm = () => {
 
     const handleChange = async (e) => {
         const { name, value } = e;
-        console.log(name, value)
+        // console.log(name, value)
         setData((prev) => ({
             ...prev,
             [name]: value
@@ -60,7 +60,7 @@ export const TaskForm = () => {
         const response = await axios.get(`http://localhost:8085/user`,{
             withCredentials: true
         });
-        console.log(response.data)
+        // console.log(response.data)
         setUsers(response.data.result);
     }, [])
 

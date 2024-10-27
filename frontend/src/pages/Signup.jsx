@@ -46,7 +46,7 @@ const SignUp = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log(registerData);
+        // console.log(registerData);
         register();
     }
 

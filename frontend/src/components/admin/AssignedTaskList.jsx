@@ -9,11 +9,11 @@ export const AssignedTaskList = () => {
     const [tasks, setTasks] = useState();
 
     const getAllTasks = async () => {
-        const data = await axios.get("http://localhost:8085/tasks", {
+        const data = await axios.get("http://localhost:8085/tasks/assignedtask", {
             withCredentials: true
         });
         console.log(data)
-        setTasks(data.data)
+        setTasks(data.data.result)
     }
 
     const handleDelete = async (id) => {
